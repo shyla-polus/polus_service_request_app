@@ -57,5 +57,13 @@ public class LoginController {
 		}
 	}
 
-
+//	Incomplete
+	@GetMapping("/countries")
+	public ResponseEntity<List<String>> getCountries() {
+		try {
+			return null;
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 }
