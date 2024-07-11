@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.polusServiceRequest.DTOs.CountryDTO;
 import com.example.polusServiceRequest.DTOs.SignInDTO;
 import com.example.polusServiceRequest.DTOs.SignInResponseDTO;
 import com.example.polusServiceRequest.DTOs.SignUpDTO;
+import com.example.polusServiceRequest.models.CountryEntity;
 import com.example.polusServiceRequest.models.UserEntity;
 import com.example.polusServiceRequest.services.LoginService;
 
@@ -57,5 +59,13 @@ public class LoginController {
 		}
 	}
 
-
+	@GetMapping("/countries")
+    public ResponseEntity<List<CountryDTO>> getCountries() {
+        try {
+            List<CountryDTO> countries = loginService.getAllCountries();
+            return ResponseEntity.ok().body(countries);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }

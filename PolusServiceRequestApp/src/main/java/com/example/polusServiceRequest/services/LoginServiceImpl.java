@@ -1,13 +1,16 @@
 package com.example.polusServiceRequest.services;
 
+import com.example.polusServiceRequest.DTOs.CountryDTO;
 import com.example.polusServiceRequest.DTOs.RoleDTO;
 import com.example.polusServiceRequest.DTOs.SignInResponseDTO;
 import com.example.polusServiceRequest.DTOs.SignUpDTO;
 import com.example.polusServiceRequest.constants.Constants;
+import com.example.polusServiceRequest.models.CountryEntity;
 import com.example.polusServiceRequest.models.RoleEntity;
 import com.example.polusServiceRequest.models.UserEntity;
 import com.example.polusServiceRequest.models.UserRoleEntity;
 import com.example.polusServiceRequest.repositories.UserRepository;
+import com.example.polusServiceRequest.repositories.CountryRepository;
 import com.example.polusServiceRequest.repositories.RoleRepository;
 import com.example.polusServiceRequest.repositories.UserRoleRepository;
 
@@ -30,6 +33,9 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+	
+	@Autowired
+    private CountryRepository countryRepository;  // New repository
 
 	@Override
 	public SignInResponseDTO signIn(String username, String password) {
@@ -100,5 +106,19 @@ public class LoginServiceImpl implements LoginService {
 			throw new RuntimeException("Error during sign-up: " + e.getMessage(), e);
 		}
 	}
+	
+	 @Override
+	    public List<CountryDTO> getAllCountries() {
+	        return countryRepository.findAll().stream()
+	                .map(country -> new CountryDTO(
+	                    country.getCountryCode(),
+	                    country.getCountryName(),
+	                    country.getCurrencyCode(),
+	                    country.getUpdateTimestamp(),
+	                    country.getUpdateUser(),
+	                    country.getCountryCodeIso2()
+	                ))
+	                .collect(Collectors.toList());
+	    }
 
 }

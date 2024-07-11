@@ -15,7 +15,7 @@ public class RoleEntity {
 	@Column(name = "roleid")
 	private Long roleId;
 
-	@Column(name = "rolename", nullable = false, unique = true)
+	@Column(name = "ROLE_NAME", nullable = false, unique = true)
 	private String roleName;
 
 	@Column(name = "roledescription", nullable = false)
