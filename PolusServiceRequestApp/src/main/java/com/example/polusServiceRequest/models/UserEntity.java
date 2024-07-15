@@ -50,8 +50,12 @@ public class UserEntity {
 //	@JoinColumn(name = "country", referencedColumnName = "COUNTRY_CODE")
 //	private CountryEntity country;
 	 
-	@Column(name = "country")
-	private String country;
+	@ManyToOne
+	@JoinColumn(name = "COUNTRY_CODE",referencedColumnName = "COUNTRY_CODE")
+	private CountryEntity countryCode;
+//	
+//	@Column(name = "country")
+//	private String country; 
 	
 	@Column(name = "phoneno")
 	private String phoneNo;

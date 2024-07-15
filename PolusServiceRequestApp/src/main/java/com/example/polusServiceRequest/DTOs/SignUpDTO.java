@@ -1,5 +1,7 @@
 package com.example.polusServiceRequest.DTOs;
 
+import com.example.polusServiceRequest.models.CountryEntity;
+
 import lombok.Data;
 
 @Data
@@ -10,7 +12,7 @@ public class SignUpDTO {
 	private String userName;
 	private String password;
 	private String email;
-	private String country;
+	private CountryEntity country;//changed
 	private String phoneNo;
 	private String address;
 

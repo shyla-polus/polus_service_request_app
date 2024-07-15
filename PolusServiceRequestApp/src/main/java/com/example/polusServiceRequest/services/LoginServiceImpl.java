@@ -49,7 +49,7 @@ public class LoginServiceImpl implements LoginService {
 				responseDTO.setLastName(user.getLastName());
 				responseDTO.setUserName(user.getUsername());
 				responseDTO.setEmail(user.getEmail());
-				responseDTO.setCountry(user.getCountry());
+				responseDTO.setCountry(user.getCountryCode());
 				responseDTO.setPhoneNo(user.getPhoneNo());
 				responseDTO.setAddress(user.getAddress());
 				responseDTO.setCreatedDate(user.getCreatedDate());
@@ -86,7 +86,7 @@ public class LoginServiceImpl implements LoginService {
 			newUser.setUsername(signUpDTO.getUserName());
 			newUser.setPassword(signUpDTO.getPassword());
 			newUser.setEmail(signUpDTO.getEmail());
-			newUser.setCountry(signUpDTO.getCountry());
+			newUser.setCountryCode(signUpDTO.getCountry());
 			newUser.setPhoneNo(signUpDTO.getPhoneNo());
 			newUser.setAddress(signUpDTO.getAddress());
 			newUser.setCreatedDate(new Date());

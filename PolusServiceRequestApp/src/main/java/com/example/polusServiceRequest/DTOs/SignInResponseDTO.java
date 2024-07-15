@@ -3,6 +3,8 @@ package com.example.polusServiceRequest.DTOs;
 import java.util.Date;
 import java.util.List;
 
+import com.example.polusServiceRequest.models.CountryEntity;
+
 import lombok.Data;
 
 
@@ -13,7 +15,7 @@ public class SignInResponseDTO {
 	private String lastName;
 	private String userName;
 	private String email;
-	private String country;
+	private CountryEntity country;
 	private String phoneNo;
 	private String address;
 	private Date createdDate;
@@ -48,11 +50,11 @@ public class SignInResponseDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getCountry() {
+	public CountryEntity getCountry() {
 		return country;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+	public void setCountry(CountryEntity countryEntity) {
+		this.country = countryEntity;
 	}
 	public String getPhoneNo() {
 		return phoneNo;
