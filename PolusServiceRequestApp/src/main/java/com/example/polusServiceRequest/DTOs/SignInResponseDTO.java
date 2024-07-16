@@ -1,7 +1,10 @@
 package com.example.polusServiceRequest.DTOs;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
+import com.example.polusServiceRequest.models.CountryEntity;
 
 import lombok.Data;
 
@@ -13,10 +16,11 @@ public class SignInResponseDTO {
 	private String lastName;
 	private String userName;
 	private String email;
-	private String country;
+	private CountryEntity country;
 	private String phoneNo;
 	private String address;
-	private Date createdDate;
+	private Timestamp createdDate;
+	private Timestamp updatedDate;
 	private List<RoleDTO> roles;
 
 }
