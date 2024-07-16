@@ -1,5 +1,6 @@
 package com.example.polusServiceRequest.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,19 +13,20 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user_role")
-public class UserRoleEntity {
+@Table(name = "PERSON_ROLE")
+public class PersonRoleEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "PERSON_ROLE_ID")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userid")
-	private UserEntity user;
+	@ManyToOne
+	@JoinColumn(name = "PERSON_ID", referencedColumnName = "PERSON_ID")
+	private PersonEntity person;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "roleid")
+	@ManyToOne
+	@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
 	private RoleEntity role;
-
+	
 }
