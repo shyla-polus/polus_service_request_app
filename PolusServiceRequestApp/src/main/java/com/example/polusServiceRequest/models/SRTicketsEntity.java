@@ -1,8 +1,9 @@
 package com.example.polusServiceRequest.models;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -41,15 +43,18 @@ public class SRTicketsEntity {
 	@JoinColumn(name = "STATUS_CODE")
 	private SRTicketStatusEntity status;
 
-	@Column(name = "DESCRIPTION", length = 255)
+	@Column(name = "DESCRIPTION")
 	private String description;
 
 	@Column(name = "CREATE_TIMESTAMP")
-//	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp createTimestamp;
 
 	@Column(name = "UPDATE_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date updateTimestamp;
+	private Timestamp updateTimestamp;
+	
+	 @OneToMany(mappedBy = "srTicket", cascade = CascadeType.ALL, orphanRemoval = true)
+	    private List<SRTicketHistoryEntity> history;
 
+	
 }

@@ -1,6 +1,7 @@
 package com.example.polusServiceRequest.models;
 
 import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,27 +14,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "SR_TICKET_HISTORY")
-public class SRTicketHistoryEntity {
+@Table(name = "SR_TICKET_COMMENTS")
+public class SRTicketCommentsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "HISTORY_ID")
-    private Long historyId;
+    @Column(name = "COMMENT_ID")
+    private Long commentId;
 
     @ManyToOne
-    @JoinColumn(name = "SR_TICKET_ID")
+    @JoinColumn(name = "SR_TICKET_ID", referencedColumnName = "SR_TICKET_ID")
     private SRTicketsEntity srTicket;
 
-    @ManyToOne
-    @JoinColumn(name = "STATUS_CODE")
-    private SRTicketStatusEntity statusCode;
+    @Column(name = "COMMENT", nullable = false)
+    private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "UPDATE_USER")
-    private PersonEntity updateUser;
+    @JoinColumn(name = "COMMENT_USER")
+    private PersonEntity commentUser;
 
-    @Column(name = "UPDATE_TIMESTAMP")
-    private Timestamp updateTimestamp;
-
+    @Column(name = "COMMENT_TIMESTAMP", nullable = false)
+    private Timestamp commentTimestamp;
 }

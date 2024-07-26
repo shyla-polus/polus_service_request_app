@@ -1,7 +1,5 @@
 package com.example.polusServiceRequest.services;
 
-import com.example.polusServiceRequest.DTOs.AdminDTO;
-import com.example.polusServiceRequest.DTOs.CountryDTO;
 import com.example.polusServiceRequest.DTOs.RoleDTO;
 import com.example.polusServiceRequest.DTOs.SignInResponseDTO;
 import com.example.polusServiceRequest.DTOs.SignUpDTO;
@@ -21,10 +19,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -47,13 +43,13 @@ public class LoginServiceImpl implements LoginService {
 			PersonEntity person = personRepository.findByUserNameAndPassword(username, password);
 			if (person != null) {
 				SignInResponseDTO responseDTO = new SignInResponseDTO();
-				responseDTO.setUserId(person.getPersonId());
+				responseDTO.setPersonId(person.getPersonId());
 				responseDTO.setFirstName(person.getFirstName());
 				responseDTO.setLastName(person.getLastName());
 				responseDTO.setUserName(person.getUserName());
 				responseDTO.setEmail(person.getEmail());
 				responseDTO.setCountry(person.getCountry());
-				responseDTO.setPhoneNo(person.getPhoneNumber());
+				responseDTO.setPhoneNumber(person.getPhoneNumber());
 				responseDTO.setAddress(person.getAddress());
 				responseDTO.setCreatedDate(person.getCreateTimestamp());
 				responseDTO.setUpdatedDate(person.getUpdateTimestamp());
@@ -88,6 +84,7 @@ public class LoginServiceImpl implements LoginService {
 			Optional<CountryEntity> country = countryRepository.findById(signUpDTO.getCountry());
 			newPerson.setFirstName(signUpDTO.getFirstName());
 			newPerson.setLastName(signUpDTO.getLastName());
+			newPerson.setFullName(signUpDTO.getFirstName() + " " + signUpDTO.getLastName());
 			newPerson.setUserName(signUpDTO.getUserName());
 			newPerson.setPassword(signUpDTO.getPassword());
 			newPerson.setEmail(signUpDTO.getEmail());
@@ -96,6 +93,8 @@ public class LoginServiceImpl implements LoginService {
 			newPerson.setAddress(signUpDTO.getAddress());
 			newPerson.setCreateTimestamp(Timestamp.from(Instant.now()));
 			newPerson.setUpdateTimestamp(Timestamp.from(Instant.now()));
+			newPerson.setStatus("Active");
+			newPerson.setDesignation(signUpDTO.getDesignation());
 			PersonEntity savedPerson = personRepository.save(newPerson);
 
 			RoleEntity role = roleRepository.findByRoleName(RoleNamesConstants.DEFAULT_ROLE);
@@ -104,8 +103,12 @@ public class LoginServiceImpl implements LoginService {
 			}
 
 			PersonRoleEntity personRole = new PersonRoleEntity();
+//			PersonEntity admin = personRepository.findById(5L)
+//					.orElseThrow(() -> new RuntimeException("Admin not found"));
 			personRole.setPerson(savedPerson);
 			personRole.setRole(role);
+			personRole.setUpdateUser(savedPerson);
+			personRole.setUpdateTimestamp(Timestamp.from(Instant.now()));
 			personRoleRepository.save(personRole);
 			return true;
 		} catch (Exception e) {
@@ -114,35 +117,8 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public List<CountryDTO> getAllCountries() {
-		List<CountryEntity> countries = countryRepository.findAll();
-		List<CountryDTO> countryDTOs = new ArrayList<>();
-
-		for (CountryEntity country : countries) {
-			CountryDTO dto = new CountryDTO();
-			dto.setCountryCode(country.getCountryCode());
-			dto.setCountryName(country.getCountryName());
-			dto.setCurrencyCode(country.getCurrencyCode());
-			dto.setUpdateTimestamp(country.getUpdateTimestamp());
-			dto.setUpdateUser(country.getUpdateUser());
-			dto.setCountryCodeIso2(country.getCountryCodeIso2());
-			countryDTOs.add(dto);
-		}
-
-		return countryDTOs;
+	public List<CountryEntity> getAllCountries() {
+		return countryRepository.findAll();
 	}
 
-	@Override
-	public List<AdminDTO> getAllApplicationAdministrators() {
-		List<PersonEntity> administrators = personRepository.findAllApplicationAdministrators();
-		List<AdminDTO> administratorDTOs = new ArrayList<>();
-		for (PersonEntity person : administrators) {
-			AdminDTO dto = new AdminDTO();
-			dto.setPersonId(person.getPersonId());
-			dto.setFirstName(person.getFirstName());
-			dto.setLastName(person.getLastName());
-			administratorDTOs.add(dto);
-		}
-		return administratorDTOs;
-	}
 }

@@ -3,10 +3,9 @@ package com.example.polusServiceRequest.DTOs;
 import lombok.Data;
 
 @Data
-public class SRTicketCategoryDTO {
+public class NewServiceCategoryDTO {
 
-	private Long categoryCode;
+	private Long adminId;
 	private String categoryName;
 	private String description;
-
 }

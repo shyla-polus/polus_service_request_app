@@ -2,8 +2,6 @@ package com.example.polusServiceRequest.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +16,20 @@ public class SRTicketCategoryServiceImpl implements SRTicketCategoryService {
 	private SRTicketCategoryRepository categoryRepository;
 
 	@Override
-	public List<SRTicketCategoryEntity> getAllCategories() {
+	public List<SRTicketCategoryDTO> getAllCategories() {
 		List<SRTicketCategoryEntity> categories = categoryRepository.findAll();
-		return categories;
-//		List<SRTicketCategoryDTO> categoryDTOs = new ArrayList<>();
-//		for (SRTicketCategoryEntity category : categories) {
-//			SRTicketCategoryDTO dto = new SRTicketCategoryDTO();
-//			dto.setCategoryCode(category.getCategoryCode());
-//			dto.setCategoryName(category.getCategoryName());
-//			dto.setDescription(category.getDescription());
-//			categoryDTOs.add(dto);
-//		}
-//		return categoryDTOs;
+		
+		List<SRTicketCategoryDTO> ticketDTOs = new ArrayList<>();
+
+		for (SRTicketCategoryEntity category : categories) {
+			SRTicketCategoryDTO dto = new SRTicketCategoryDTO();
+			dto.setCategoryCode(category.getCategoryCode());
+			dto.setCategoryName(category.getCategoryName());
+			dto.setDescription(category.getDescription());	
+			ticketDTOs.add(dto);
+		}
+		return ticketDTOs;
+		
 }
 }
 	

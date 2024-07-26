@@ -1,10 +1,7 @@
 package com.example.polusServiceRequest.models;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
-
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,8 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 @Data
@@ -38,10 +33,14 @@ public class PersonEntity {
 
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
+	
+	@Column(name="FULL_NAME", nullable=false)
+	private String fullName;
 
-	@Column(name = "USER_NAME", nullable = false)
+	@Column(name = "USER_NAME", nullable = false,unique = true)
 	private String userName;
 
+	@JsonIgnore
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
 
@@ -59,15 +58,16 @@ public class PersonEntity {
 	private String address;
 
 	@Column(name = "CREATE_TIMESTAMP", nullable = false)
-//	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp createTimestamp;
 
 	@Column(name = "UPDATE_TIMESTAMP", nullable = false)
-//	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp updateTimestamp;
 
 	@Column(name = "STATUS")
 	private String status;
+	
+	@Column(name="DESIGNATION")
+	private String designation;
 
 	@OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<PersonRoleEntity> roles;
